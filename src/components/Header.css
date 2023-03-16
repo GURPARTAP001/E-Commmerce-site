@@ -5,6 +5,7 @@
     background-color: #131921;
     /* we want that the top nav header to remain at the top as we scroll down */
     position: sticky;
+    /* top is only used for the positioned element to specify its position */
     top: 0;
     /* as we scroll we don't want anything to come over it so we have are setting the z -index */
     z-index: 100;
@@ -14,13 +15,13 @@
 .header_search {
     display: flex;
     /* the below line help the search bar streach as big as it can */
-    flex: 1;
+    flex: 1 ;
     align-items: center;
     border-radius: 24px;
 }
 
 .header_inputsearch {
-    height: 12px;
+    height:10.6px;
     padding: 10px;
     border: none;
     width: 90%;
@@ -42,6 +43,7 @@
 
 .header_nav {
     display: flex;
+    margin-right: 20px;
     justify-content: space-evenly;
 }
 

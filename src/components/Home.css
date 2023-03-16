@@ -1,0 +1,25 @@
+.home{
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    /* through the below line we are saying that dont expand the content when the screen size increase above 1500px */
+    max-width: 1500px;
+}
+.home__row{
+    display: flex;
+    z-index: 1;
+    margin-left: 5px;
+    margin-right: 5px;
+    justify-content: center;
+}
+.home__img{
+    /* the below line will make the image take the whole width */
+    width: 100%;
+    /* this will allow the the other images to come over it */
+    z-index: -1;
+    /* it will let the other things to over lap it */
+    margin-bottom: -180px;
+    /* the below line of code gives the graidient effect to the image */
+    mask-image: linear-gradient(to bottom,rgba(0,0,0,1),rgba(0,0,0,0));
+}
