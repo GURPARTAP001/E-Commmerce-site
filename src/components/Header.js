@@ -25,10 +25,12 @@ function Header() {
       {/* it is the the options present next to the serach bar on the top of  the webpage */}
       <div className="header_nav">
         {/* we are making the seperate div for each option inside which we will enclose the span which will have the options */}
+        <Link to="/login">
         <div className="header_option">
           <span className='header_optionOne'>Hello Guest</span>
           <span className='header_optionTwo'>Sign In</span>
         </div>
+        </Link>
         <div className="header_option">
           <span className='header_optionOne'>Return</span>
           <span className='header_optionTwo'>& Orders</span>
