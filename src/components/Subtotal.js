@@ -2,7 +2,11 @@ import React from 'react'
 import "./Subtotal.css"
 //NOW TO SHOW THE SUBTOTAL WE ARE USING THE LIBRARY NAME AS THE react-curreny-format
 import CurrencyFormat from "react-currency-format"
+import { useStateValue } from '../StateProvider';
+import { getBasketTotal } from '../reducer';
+
 export default function Subtotal() {
+  const [{basket},dispatch]=useStateValue();
   return (
     <div className='subtotal'>
         <CurrencyFormat
@@ -10,7 +14,7 @@ export default function Subtotal() {
         (
         <>
         <p>
-            Subtotal(0 items) :<strong> 0</strong>
+            Subtotal({basket.length}) :<strong>{value}</strong>
         </p>
         <small className='subtotal_gift'>
             <input type="checkbox"/>This order contains a gift
@@ -18,7 +22,7 @@ export default function Subtotal() {
         </>
         )}
         decimalScale={2}
-        value={0}
+        value={getBasketTotal(basket)}
         displayType={"text"}
         thousandSeparator={true}
         prefix={"₹"}
