@@ -3,8 +3,10 @@ import './Header.css'
 import SearchIcon from '@mui/icons-material/Search';//this is the icon present inside the search bar
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';//this is the icon present at the end of the nav,with the count of the product in the basket
 import { Link } from "react-router-dom"
+import { useStateValue } from '../StateProvider';
 
 function Header() {
+  const [{basket},dispatch]=useStateValue();
   return (
     // Below is the main header of the webpage
     <div className='header'>
@@ -38,7 +40,8 @@ function Header() {
         <Link to="/checkout">
         <div className="header_optionBasket">
           <ShoppingBasketIcon />
-          <span className='header_optionTwo header_basketcount'>0</span>
+          {/* in the below line the ? in the basket?.length says that if the basket have an error then the error will be handled properly */}
+          <span className='header_optionTwo header_basketcount'>{basket?.length}</span>
         </div>
         </Link>
       </div>
