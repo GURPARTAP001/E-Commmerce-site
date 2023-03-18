@@ -4,9 +4,18 @@ import SearchIcon from '@mui/icons-material/Search';//this is the icon present i
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';//this is the icon present at the end of the nav,with the count of the product in the basket
 import { Link } from "react-router-dom"
 import { useStateValue } from '../StateProvider';
+import { auth } from '../firebase';
 
 function Header() {
-  const [{basket},dispatch]=useStateValue();
+  //here we have the basket and the user inside the {} as we have pushed both the basket product and the logged user into the data layer
+  const [{basket,user},dispatch]=useStateValue();
+
+  //it handles the sign out funtion 
+  const handleAuthentication =()=>{
+    if(user){
+      auth.signOut();
+    }
+  }
   return (
     // Below is the main header of the webpage
     <div className='header'>
@@ -25,10 +34,12 @@ function Header() {
       {/* it is the the options present next to the serach bar on the top of  the webpage */}
       <div className="header_nav">
         {/* we are making the seperate div for each option inside which we will enclose the span which will have the options */}
-        <Link to="/login">
-        <div className="header_option">
+        {/* by doing the !user && now we will only get redirected to the login page if we have no user */}
+        <Link to={!user && '/login'}>
+        <div onClick={handleAuthentication} className="header_option">
           <span className='header_optionOne'>Hello Guest</span>
-          <span className='header_optionTwo'>Sign In</span>
+          {/* if the user exist the sign out else sign in */}
+          <span className='header_optionTwo'>{user?'Log Out':'Sign In'}</span>
         </div>
         </Link>
         <div className="header_option">

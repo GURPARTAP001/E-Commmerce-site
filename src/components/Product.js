@@ -8,6 +8,7 @@ function Product({ id,title, price, image, rating }) {
     const [state,dispatch]=useStateValue();
     const addToBasket=()=>{
         //through this function we are pushing the content into the data layer when the add to basket btn is pressed
+        
         dispatch({
             //below is the action which when taken the item get pushed to the data layer
             type:"ADD_TO_BASKET",

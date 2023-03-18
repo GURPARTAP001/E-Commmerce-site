@@ -1,6 +1,7 @@
 //the below line represent the initially the data layer is only containing the [empty]
 export const initialState={
   basket:[],
+  user:null//initially there are no user,when the user log in we will push the user into the data layer
 };
 
 //SELECTOR
@@ -43,6 +44,17 @@ const reducer=(state,action)=>{
             ...state,
             basket:newBasket//making the original array same as the new array which we had created
         }
+
+        //now we are defining the new action for the set_user
+        case "SET_USER":
+            return{
+                ...state,
+                user:action.user
+            }
+
+
+
+
 
         default:
             return state;
