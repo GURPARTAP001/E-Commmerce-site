@@ -37,7 +37,8 @@ function Header() {
         {/* by doing the !user && now we will only get redirected to the login page if we have no user */}
         <Link to={!user && '/login'}>
         <div onClick={handleAuthentication} className="header_option">
-          <span className='header_optionOne'>Hello Guest</span>
+          <span className='header_optionOne'>Hello,{user?.email}</span>
+          {/* in the above line "?." is the optional chaning */}
           {/* if the user exist the sign out else sign in */}
           <span className='header_optionTwo'>{user?'Log Out':'Sign In'}</span>
         </div>
