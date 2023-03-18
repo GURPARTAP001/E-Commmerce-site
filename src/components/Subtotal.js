@@ -4,8 +4,11 @@ import "./Subtotal.css"
 import CurrencyFormat from "react-currency-format"
 import { useStateValue } from '../StateProvider';
 import { getBasketTotal } from '../reducer';
+import {useNavigate} from "react-router-dom" 
 
 export default function Subtotal() {
+
+  const navigate=useNavigate();//this give us the browser history,now using this we can programatically go/push to a link unlike using the Link(if we use the link then the styling of the button will get of and it will look like a link)
   const [{basket},dispatch]=useStateValue();
   return (
     <div className='subtotal'>
@@ -27,7 +30,7 @@ export default function Subtotal() {
         thousandSeparator={true}
         prefix={"₹"}
         />
-        <button>Proceed to checkout</button>
+        <button onClick={event=>navigate('/payment')}>Proceed to checkout</button>
    
       
     </div>
