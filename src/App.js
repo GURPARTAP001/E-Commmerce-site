@@ -8,6 +8,12 @@ import { useEffect } from 'react';
 import { auth } from './firebase';
 import { useStateValue } from './StateProvider';
 import Payment from './components/Payment';
+import {loadStripe} from "@stripe/stripe-js"
+import {Elements} from "@stripe/react-stripe-js"
+
+//the below promise contains the stripe publishing key
+const promise=loadStripe("pk_test_51MnMfwSJql7chJxUSplwq5yjbFcmqinsRKGon5ykbT5MtJgJdAYMQapbHn7iS4dd0KcdkY31u4RvImCMDYQVGuBo00pcLOWmYB");
+
 function App() {
   const [{},dispatch]=useStateValue();
   useEffect(() => {
@@ -51,7 +57,12 @@ function App() {
 
           <Route path="/login" element={<Login />} />
 
-          <Route exact path="/payment" element={<> <Header /><Payment/></>} />
+           {/* IN THE PAYMENT WE ARE USING THE HIGHER ORDER FUNCTION TO WRAP THE Payment ELEMENT INSIDE THE ELEMENTS */}
+          <Route exact path="/payment" element={<> <Header />
+          <Elements stripe={promise}>
+          <Payment/>
+          </Elements>
+          </>} />
 
         </Routes>
 
