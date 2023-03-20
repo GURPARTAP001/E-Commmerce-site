@@ -1,5 +1,5 @@
 .header {
-    height: 60px;
+    height: auto;
     display: flex;
     align-items: center;
     background-color: #131921;
@@ -9,6 +9,8 @@
     top: 0;
     /* as we scroll we don't want anything to come over it so we have are setting the z -index */
     z-index: 100;
+    overflow: hidden;
+    flex-wrap: wrap;
 
 }
 
@@ -73,4 +75,60 @@
 .header_basketcount {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+@media screen and (max-width:426px) {
+    .header{
+        position: static;
+    }
+    .header_logo_container{
+           display: flex;
+           justify-content: center;
+           width: 100vw;
+           /* height: 30px; */
+          
+    }
+        .header_logo {
+            margin-top: 5px;
+            height: 30px;
+            
+        }
+        .header_search{
+            display: flex;
+            justify-content: center;
+            /* height: 20vh; */
+            margin-left: 20%;
+            margin-right: 20%;
+            margin-bottom: 10px;
+            background-color: #b1341e;
+           
+
+        }
+        .header_inputsearch{
+            height: 5px;
+        }
+        .header_searchicon{
+            height: 15px !important;
+        }
+        
+        .header_nav{
+            justify-content: center;
+            margin-left: 24%;
+            margin-right: 20%;
+            margin-bottom: 10px;
+            
+        }
+        .header_option{
+            margin-left: 12%;
+            margin-right: 10%;
+            
+        }
+        .header_optionOne{
+            font-size: 9px;
+            font-weight: 400;
+        }
+        .header_optionTwo{
+            font-size: 11px;
+            font-weight: 800;
+        }
 }
