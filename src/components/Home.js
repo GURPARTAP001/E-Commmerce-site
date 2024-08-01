@@ -1,35 +1,66 @@
-import React from 'react'
-import "./Home.css"
-import Product from './Product'
+// src/components/Home.js
+import React, { useEffect, useState, useCallback } from 'react';
+import axios from 'axios';
+import Product from './Product';
+import './Home.css';
 
 function Home() {
-    return (
-        <div className='home'>
-            {/* we will enclose everthing inside the container */}
-            <div className="home__container">
-                <img className="home__img" src="https://m.media-amazon.com/images/I/81fl-uN9kOL._SX3000_.jpg" alt="image" />
+  const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
-                {/* this are the rows which contains the various products */}
-                <div className="home__row">
-                    {/* we will make a product component */}
-                    <Product  id="3352354531" title="Oppo Enco X2 with Active Noise Cancellation, Triple Mic for Better Calls, Coaxial Dual-Driver for Deep bass Bluetooth Headset (Black)" price={9999} image="https://m.media-amazon.com/images/I/31wIr9DO-mL._AC_SY400_.jpg" rating={5} />
-                    <Product  id="2" title="Instant Pot Air Fryer, Vortex 8 Litre ClearCook Dual Basket, Touch Control Panel, 360° EvenCrisp™ Technology
-                    "  rating={4} price={29900} image="https://m.media-amazon.com/images/I/81W+9zsvSpL._AC_SY400_.jpg" />
-                </div>
-                <div className="home__row">
-                    <Product  id="97883" image="https://m.media-amazon.com/images/I/81rDAWdv5kL._SL1500_.jpg" title="Amazon Brand - Symactive Racer S2000 Series, 27.5T Geared Mountain Bike" price={10900} rating={5} />
-                    <Product  id="311224" image="https://m.media-amazon.com/images/I/61EmOOTxOTL._UX679_.jpg" title="Casio G-Shock Analog-Digital Black Dial Men's"
-                    rating={4} price={10196} />
-                    <Product  id="924238905" image="https://m.media-amazon.com/images/I/71rH7Skt1QL._SX679_.jpg" title="SRI Lankan Tropical Rainforest Wildlife Elephant Inspired Home DÉCOR" rating={3} price={1395} />
-                </div>
-                <div className="home__row">
-                <Product  id="12121986" image="https://m.media-amazon.com/images/I/71d5fMDvq9L._SX679_.jpg" title="OnePlus 80 cm (32 inches) Y Series HD Ready LED Smart Android TV 32Y1 (Black)" rating={4} price={14999} />
-                <Product  id="345345353337" image="https://m.media-amazon.com/images/I/81KUD5T62SL._SX679_.jpg" title="Divine Casa Microfibre Mild Winter Abstract Printed Reversible Single Bed Comforter Blanket Light Weight Quilt Duvet, Navy Blue & White 1 Pieces" price={878} rating={4}/>
-                </div>
-            </div>
+  const fetchProducts = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`https://fakestoreapi.com/products?limit=10&page=${page}`);
+      setProducts(prevProducts => [...prevProducts, ...response.data]);
+      setHasMore(response.data.length > 0);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setLoading(false);
+    }
+  }, [page]);
 
-        </div>
-    )
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+  const handleScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.target.documentElement;
+    if (scrollHeight - scrollTop === clientHeight && hasMore) {
+      setPage(prevPage => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  return (
+    <div className="home">
+      <div className="home_image_container">
+        <img className="home_image" src="https://www.mikevestil.com/wp-content/uploads/2021/10/BANNER-ADS.jpg" alt="home banner" />
+        <div className="home_gradient" ><img src="https://www.mikevestil.com/wp-content/uploads/2021/10/BANNER-ADS.jpg" alt="home banner" /></div>
+      </div>
+      <div className="home_row">
+        {products.map(({ id, title, price, description, category, image, rating }) => (
+          <Product
+            key={id}
+            id={id}
+            title={title}
+            image={image}
+            price={price}
+            rating={Math.round(rating.rate)}
+          />
+        ))}
+      </div>
+      {loading && <p>Loading...</p>}
+      {!hasMore && <p>No more products to load.</p>}
+    </div>
+  );
 }
 
-export default Home
+export default Home;
